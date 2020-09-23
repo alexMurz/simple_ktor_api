@@ -1,8 +1,7 @@
-package data
+package api.data
 
 import java.time.LocalDate
 
-// Very nice serialized names
 data class DataPointRaw(
     val startDate: String,
     val endDate: String,

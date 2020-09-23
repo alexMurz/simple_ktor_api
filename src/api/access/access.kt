@@ -1,6 +1,6 @@
-package access
+package api.access
 
-import data.DataPoint
+import api.data.DataPoint
 import java.time.LocalDate
 
 interface Access {

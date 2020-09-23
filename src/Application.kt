@@ -1,20 +1,17 @@
 package com.example
 
-import access.UralsCSVAccess
-import com.example.mods.Mod
+import api.access.UralsCSVAccess
 import com.example.mods.ModGetAverage
 import com.example.mods.ModGetData
 import com.example.mods.ModMinMax
 import com.example.statistics.StatTrack
 import io.ktor.application.*
+import io.ktor.features.CallLogging
 import io.ktor.response.*
-import io.ktor.request.*
 import io.ktor.routing.get
 import io.ktor.routing.routing
-import io.ktor.util.toMap
 import java.io.File
 import java.lang.StringBuilder
-import java.time.LocalDate
 
 private val raw_api = UralsCSVAccess(File("./resources/source.csv"))
 private val api = StatTrack(raw_api)
@@ -30,6 +27,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
+    install(CallLogging)
     routing {
 
         get("/") {

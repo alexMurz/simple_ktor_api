@@ -1,7 +1,7 @@
-package access
+package api.access
 
-import data.DataPoint
-import data.DataPointRaw
+import api.data.DataPoint
+import api.data.DataPointRaw
 import java.io.File
 import java.time.LocalDate
 import kotlin.math.max
@@ -56,17 +56,16 @@ class UralsCSVAccess(file: File): Access {
         firstInclusive: LocalDate,
         lastExclusive: LocalDate,
         strict: Boolean
-    )=
-        data.filter { dateRangeTest(firstInclusive, lastExclusive, it.startDate, it.endDate, strict) }
-            .let { list ->
-                val first = list.firstOrNull() ?: return@let Pair(Float.NaN, Float.NaN)
-                var min = first.value
-                var max = first.value
-                for (v in list) {
-                    min = min(min, v.value)
-                    max = max(max, v.value)
-                }
-                Pair(min, max)
+    ) = data.filter { dateRangeTest(firstInclusive, lastExclusive, it.startDate, it.endDate, strict) }
+        .let { list ->
+            val first = list.firstOrNull() ?: return@let Pair(Float.NaN, Float.NaN)
+            var min = first.value
+            var max = first.value
+            for (v in list) {
+                min = min(min, v.value)
+                max = max(max, v.value)
             }
+            Pair(min, max)
+        }
 
 }

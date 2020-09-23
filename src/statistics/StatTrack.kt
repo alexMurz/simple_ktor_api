@@ -1,12 +1,12 @@
 package com.example.statistics
 
-import access.Access
+import api.access.Access
 import com.example.mods.Mod
 import io.ktor.application.ApplicationCall
 import io.ktor.response.respond
 import java.time.LocalDate
 
-class StatTrack(val access: Access): Mod, Access {
+class StatTrack(private val access: Access): Mod, Access {
     override fun doc() = """
         Provide api usage statistics
         No arguments
@@ -15,7 +15,6 @@ class StatTrack(val access: Access): Mod, Access {
     override suspend fun perform(call: ApplicationCall) {
 
         // Replace NaN with 0
-        fun Float.escapeNan() = if (isNaN()) 0.0f else this
         fun Double.escapeNan() = if (isNaN()) 0.0 else this
 
         fun StringBuffer.logUsage(buff: ArrayList<Long>): StringBuffer {
@@ -44,14 +43,13 @@ class StatTrack(val access: Access): Mod, Access {
         val minmax = ArrayList<Long>()
     }
 
-    private inline fun <T>measure(buff: ArrayList<Long>, f: () -> T): T {
+    private inline fun <T> measure(buff: ArrayList<Long>, f: () -> T): T {
         val start = System.nanoTime()
         val result = f()
         val time = System.nanoTime() - start
         buff.add(time)
         return result
     }
-
 
     override fun getAll() = measure(timing.all) { access.getAll() }
 
