@@ -1,13 +1,12 @@
 package com.example.mods
 
-import access.Access
+import api.access.Access
 import com.example.mods.Mod.Companion.err
 import io.ktor.application.ApplicationCall
-import io.ktor.application.call
 import io.ktor.response.respond
 import java.time.LocalDate
 
-class ModGetData(val access: Access) : Mod {
+class ModGetData(private val access: Access) : Mod {
     override fun doc() = """
         Get value for given date
         Params
@@ -16,7 +15,7 @@ class ModGetData(val access: Access) : Mod {
 
     override suspend fun perform(call: ApplicationCall) {
         val dateString: String = call.request.queryParameters["date"] ?: run {
-            return call.respond(err("/date expecting date param with format YYYY-MM-DD"))
+            return call.respond(err("expecting date param with format YYYY-MM-DD"))
         }
         try {
             val date = LocalDate.parse(dateString)

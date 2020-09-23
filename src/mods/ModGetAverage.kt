@@ -1,6 +1,6 @@
 package com.example.mods
 
-import access.Access
+import api.access.Access
 import com.example.mods.Mod.Companion.err
 import io.ktor.application.ApplicationCall
 import io.ktor.response.respond
