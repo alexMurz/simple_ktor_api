@@ -1,7 +1,6 @@
 package com.example.mods
 
 import access.Access
-import com.example.api
 import com.example.mods.Mod.Companion.err
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
@@ -21,7 +20,7 @@ class ModGetData(val access: Access) : Mod {
         }
         try {
             val date = LocalDate.parse(dateString)
-            call.respond(api.getForDate(date)?.value.toString())
+            call.respond(access.getForDate(date)?.value.toString())
         } catch (_: Throwable) {
             call.respond(err("Unable to parse date"))
         }

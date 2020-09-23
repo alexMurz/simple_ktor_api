@@ -16,10 +16,9 @@ import java.io.File
 import java.lang.StringBuilder
 import java.time.LocalDate
 
-val raw_api = UralsCSVAccess(File("./resources/source.csv"))
-val api = StatTrack(raw_api)
-
-val mods = hashMapOf(
+private val raw_api = UralsCSVAccess(File("./resources/source.csv"))
+private val api = StatTrack(raw_api)
+private val mods = hashMapOf(
     "stat" to api,
     "date" to ModGetData(api),
     "get_avg" to ModGetAverage(api),
