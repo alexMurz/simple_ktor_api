@@ -1,6 +1,6 @@
 package com.example.mods
 
-import access.Access
+import api.access.Access
 import io.ktor.application.ApplicationCall
 import io.ktor.response.respond
 import java.time.LocalDate
@@ -31,7 +31,7 @@ class ModMinMax(private val access: Access): Mod {
         val strict = try {
             call.request.queryParameters["strict"]?.toBoolean() ?: false
         } catch (_: Throwable) { false }
-        val result = access.getMinMaxInRange(loDate, hiDate, strict)?.let { (a, b) ->
+        val result = access.getMinMaxInRange(loDate, hiDate, strict).let { (a, b) ->
             // a bit of hardcoded json
             "{\"min\"=\"$a\", \"max\"=\"$b\"}"
         }
